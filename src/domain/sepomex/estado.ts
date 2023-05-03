@@ -1,4 +1,4 @@
 export type Estado = {
-  nombre: string;
-  habitantes: number;
+  idEstado: number;
+  estado: string;
 };
