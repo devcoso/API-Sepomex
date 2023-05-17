@@ -1,4 +1,5 @@
 import express, { Express, json, urlencoded } from "express";
+import { AreaRouter } from "./routes/area";
 import { SepomexRouter } from "./routes/sepomex";
 // Validamos que no se encuentre en producción
 if (process.env.NODE_ENV !== "PROD") require("dotenv").config();
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/sepomex", SepomexRouter().sepomexRouter);
+app.use("/areas", AreaRouter().areaRouter);
 
 app.listen(PORT, () =>
   console.log(`Server running in ${PORT} in mode: ${MODE}`)

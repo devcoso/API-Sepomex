@@ -3,14 +3,15 @@ import util from "util";
 
 type DBContextProps = {
   sql: string;
+  flag?: boolean;
 };
 
-export const DBContext = async ({ sql }: DBContextProps) => {
+export const DBContext = async ({ sql, flag }: DBContextProps) => {
   const conn = mysql.createConnection({
     host: process.env.DBSERVER,
     user: process.env.DBUSER,
     password: process.env.DBPASS,
-    database: process.env.DBNAME,
+    database: flag ? process.env.DBTICKETS : process.env.DBNAME,
   });
 
   const query = util.promisify(conn.query).bind(conn);

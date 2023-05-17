@@ -1,14 +1,9 @@
 import { CatalogoSepomex } from "../domain/sepomex/catalogo-sepomex";
 import { DBContext } from "./db-context";
-
-// Definición
-export type SepomexRepository = {
-  getStates: () => Promise<CatalogoSepomex[]>;
-  getSuburbs: (params: { zip: string }) => Promise<CatalogoSepomex[]>;
-};
+import { ISepomexRepository } from "./interfaces/i-sepomex-repository";
 
 // Implementación
-export const getStates: SepomexRepository["getStates"] = async () => {
+export const getStates: ISepomexRepository["getStates"] = async () => {
   const dbContextResult = await DBContext({
     sql: "SELECT idEstado, estado FROM CatalogoSepomex GROUP BY (estado);",
   });
@@ -17,7 +12,7 @@ export const getStates: SepomexRepository["getStates"] = async () => {
 };
 
 // Implementación
-export const getSuburbs: SepomexRepository["getSuburbs"] = async ({ zip }) => {
+export const getSuburbs: ISepomexRepository["getSuburbs"] = async ({ zip }) => {
   const response: CatalogoSepomex[] = await DBContext({
     sql: `SELECT * FROM CatalogoSepomex WHERE cp = '${zip}';`,
   });
