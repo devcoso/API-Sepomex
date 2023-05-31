@@ -1,0 +1,9 @@
+runtime: nodejs18
+env_variables:
+  NODE_ENV: "PRODUCTION"
+  PORT: 5001
+  DBUSER: "appsmxco_sepomex"
+  DBPASS: "appsmx.com.mx.sepomex"
+  DBSERVER: "appsmx.com.mx"
+  DBNAME: "appsmxco_sepomex"
+  DBTICKETS: "appsmxco_tickets"
