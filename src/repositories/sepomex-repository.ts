@@ -16,5 +16,6 @@ export const getSuburbs: ISepomexRepository["getSuburbs"] = async ({ zip }) => {
   const response: CatalogoSepomex[] = await DBContext({
     sql: `SELECT * FROM CatalogoSepomex WHERE cp = '${zip}';`,
   });
+  
   return response;
 };

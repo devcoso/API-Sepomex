@@ -9,20 +9,28 @@ import {
 } from "../repositories/ticket-repository";
 
 type TicketBL = {
-  createTicket: (params: { item: TicketRequest }) => Promise<Ticket>; // POST
-  findAllTickets: () => Promise<Ticket[]>; // GET
+  createTicket: (params: { item: TicketRequest }) => Promise<APIResponse<Ticket>>; // POST
+  findAllTickets: () => Promise<APIResponse<Ticket[]>>; // GET
   findTicketById: (params: {
     idTicket: number;
   }) => Promise<APIResponse<Ticket>>; // GET
   updateTicket: (params: {
     ticket: Ticket;
     idTicket: number;
-  }) => Promise<boolean>; // PUT
+  }) => Promise<APIResponse<boolean>>; // PUT
 };
 
 export const createTicketBL: TicketBL["createTicket"] = async ({ item }) => {
-  console.log(item);
-  let response = await createTicket({ item });
+  let response: APIResponse<Ticket> = {
+    data: null,
+    isSuccess: true,
+    msg: "",
+  };
+  response.data = await createTicket({ item });;
+  if (!response.data) {
+    response.isSuccess = false;
+    response.msg = "No se pudo crear el Ticket";
+  }
   return response;
 };
 
@@ -30,12 +38,30 @@ export const updateTicketBL: TicketBL["updateTicket"] = async ({
   ticket,
   idTicket,
 }) => {
-  let response = await updateTicket({ ticket, idTicket });
+  let response: APIResponse<boolean> = {
+    data: null,
+    isSuccess: true,
+    msg: "",
+  };
+  response.data =  await updateTicket({ ticket, idTicket });
+  if (!response.data) {
+    response.isSuccess = false;
+    response.msg = "No se actualizó el ticket";
+  }
   return response;
 };
 
 export const findAllTicketsBL: TicketBL["findAllTickets"] = async () => {
-  let response = await findAllTickets();
+  let response: APIResponse<Ticket[]> = {
+    data: null,
+    isSuccess: true,
+    msg: "",
+  };
+  response.data = await findAllTickets();
+  if (!response.data) {
+    response.isSuccess = false;
+    response.msg = "No se puede acceder a los tickets";
+  }
   return response;
 };
 
